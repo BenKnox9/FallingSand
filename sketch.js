@@ -185,7 +185,16 @@ function draw() {
         } else if (belowB === 0) {
           nextGrid[i - dir][j + 1] = state;
           blnGridChanged = true;
-        } else {
+        }
+
+        else if (state == intHueWater) {
+          for (let x = 0; x < 3; x++) {
+            if (nextGrid[i + dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
+            if (nextGrid[i - dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
+          }
+        }
+
+        else {
           nextGrid[i][j] = state;
         }
       }
