@@ -113,6 +113,8 @@ function draw() {
   }
 
   let nextGrid = make2DArray(cols, rows);
+  let blnGridChanged = false;
+
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       let state = grid[i][j];
@@ -130,23 +132,25 @@ function draw() {
         }
         if (below === 0) {
           nextGrid[i][j + 1] = state;
+          blnGridChanged = true;
         } else if (belowA === 0) {
           nextGrid[i + dir][j + 1] = state;
+          blnGridChanged = true;
         } else if (belowB === 0) {
           nextGrid[i - dir][j + 1] = state;
+          blnGridChanged = true;
         } else {
           nextGrid[i][j] = state;
         }
       }
     }
   }
-  // console.log("looping");
 
-
-  if (compareGrids(grid, nextGrid)) {
+  if (!blnGridChanged) {
     console.log("stopped looping")
     noLoop();
   }
+
   grid = nextGrid;
 }
 
