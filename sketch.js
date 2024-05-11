@@ -29,6 +29,18 @@ let w = 4;
 let cols, rows;
 let hueValue = 200;
 
+let intWindowWidth = document.getElementById('main').offsetWidth;
+
+// window.innerWidth
+//   || document.documentElement.clientWidth
+//   || document.body.clientWidth;
+
+let intWindowHeight = document.getElementById('main').offsetHeight;
+
+// window.innerHeight
+//   || document.documentElement.clientHeight
+//   || document.body.clientHeight;
+
 /**
  * Checks whether a grid square is withinbounds or not
  * @param {*} i x or y coordinate of the square being checked
@@ -53,18 +65,32 @@ function compareGrids(a, b) {
  * Sets up background 
  */
 function setup() {
-  createCanvas(1200, 740);
+  console.log(`window height is ${height}`)
+  console.log(`window width is ${width}`)
+  var canvas = createCanvas(1000, 740);
+  canvas.parent("canvas")
   colorMode(HSB, 360, 255, 255);
   cols = width / w;
   rows = height / w;
   grid = make2DArray(cols, rows);
 }
 
+function onResize() {
+  // resize canvas 
+  if (intWindowHeight && intWindowWidth) {
+
+    console.log(`resizing; width: ${intWindowWidth}, height: ${intWindowHeight}`);
+    resizeCanvas(intWindowWidth, intWindowHeight);
+  }
+
+}
 
 /**
  * When mouse is dragged drops grains of sand in the area covered by the matrix
  */
 function mouseDragged() {
+  console.log(`window height is ${height}`)
+  console.log(`window width is ${width}`)
   loop();
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
