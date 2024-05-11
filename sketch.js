@@ -25,9 +25,10 @@ function make2DArray(cols, rows) {
 }
 
 let grid;
-let w = 4;
+let w;
 let cols, rows;
-let hueValue = 200;
+let intHueWater = 200;
+let intHueDirt = 32;
 
 let intWindowWidth = document.getElementById('main').offsetWidth;
 
@@ -61,10 +62,16 @@ function compareGrids(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
+function changeElement(element) {
+  hueValue = element;
+}
+
 /**
  * Sets up background 
  */
 function setup() {
+  w = 4;
+  hueValue = intHueDirt;
   console.log(`window height is ${height}`)
   console.log(`window width is ${width}`)
   var canvas = createCanvas(1000, 740);
