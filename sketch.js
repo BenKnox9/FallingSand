@@ -40,10 +40,20 @@ function withinBounds(i, bound) {
 }
 
 /**
+ * Compares arrays
+ * @param {*} a An array which is being compared
+ * @param {*} b An array which is being compared
+ * @returns true if the arrays match
+ */
+function compareGrids(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/**
  * Sets up background 
  */
 function setup() {
-  createCanvas(600, 740);
+  createCanvas(1200, 740);
   colorMode(HSB, 360, 255, 255);
   cols = width / w;
   rows = height / w;
@@ -55,6 +65,7 @@ function setup() {
  * When mouse is dragged drops grains of sand in the area covered by the matrix
  */
 function mouseDragged() {
+  loop();
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
 
@@ -67,7 +78,15 @@ function mouseDragged() {
         let row = mouseRow + j;
 
         if (withinBounds(i, cols) && withinBounds(j, rows)) {
-          grid[col][row] = hueValue;
+          if (grid[col]) {
+            if (grid[col][row] !== undefined) {
+              grid[col][row] = hueValue;
+            } else {
+              console.error(`grid[${col}][${row}] is undefined`);
+            }
+          } else {
+            console.error(`grid[${col}] is undefined`);
+          }
         }
       }
     }
@@ -121,6 +140,15 @@ function draw() {
       }
     }
   }
+  // console.log("looping");
+
+
+  if (compareGrids(grid, nextGrid)) {
+    console.log("stopped looping")
+    noLoop();
+  }
   grid = nextGrid;
 }
+
+
 

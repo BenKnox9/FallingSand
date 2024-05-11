@@ -3,6 +3,18 @@ html, body {
   padding: 0;
 }
 
+.sidebar {
+  display: flex;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top:20%;
+  right: 10%;
+}
+
 canvas {
   display: block;
 }
