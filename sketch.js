@@ -8,10 +8,10 @@
 
 
 /**
- * 
- * @param {*} cols
- * @param {*} rows 
- * @returns 
+ * Creates a grid for the background for each grain of sand
+ * @param {*} cols number of columns for grid of sand
+ * @param {*} rows number of rows for gird of sand
+ * @returns 2D grid
  */
 function make2DArray(cols, rows) {
   let arr = new Array(cols);
@@ -29,10 +29,19 @@ let w = 4;
 let cols, rows;
 let hueValue = 200;
 
+/**
+ * Checks whether a grid square is withinbounds or not
+ * @param {*} i x or y coordinate of the square being checked
+ * @param {*} bound cols or rows depending on which axis is being checked 
+ * @returns 
+ */
 function withinBounds(i, bound) {
   return i >= 0 && i <= bound - 1;
 }
 
+/**
+ * Sets up background 
+ */
 function setup() {
   createCanvas(600, 740);
   colorMode(HSB, 360, 255, 255);
@@ -41,6 +50,10 @@ function setup() {
   grid = make2DArray(cols, rows);
 }
 
+
+/**
+ * When mouse is dragged drops grains of sand in the area covered by the matrix
+ */
 function mouseDragged() {
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
@@ -61,7 +74,10 @@ function mouseDragged() {
   }
 }
 
-
+/**
+ * Draws the grains of sand in their current position then creates a copy of the grid
+ * but with every grain of sand that is able to move down in its new position
+ */
 function draw() {
   background(0);
 
@@ -76,6 +92,7 @@ function draw() {
       }
     }
   }
+
   let nextGrid = make2DArray(cols, rows);
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
