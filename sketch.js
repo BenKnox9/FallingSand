@@ -63,7 +63,18 @@ function compareGrids(a, b) {
 }
 
 function changeElement(element) {
-  hueValue = element;
+  console.log(element);
+  switch (element) {
+    case "water":
+      console.log("case water");
+      hueValue = intHueWater;
+      break;
+
+    case "dirt":
+      hueValue = intHueDirt;
+      console.log("case dirt");
+      break;
+  }
 }
 
 /**
@@ -133,6 +144,8 @@ function mouseDragged() {
 function draw() {
   background(0);
 
+
+  // draw current grid
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       noStroke();
