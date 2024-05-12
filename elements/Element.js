@@ -8,11 +8,11 @@ class Element {
     }
 
     updatePosition() {
-        // Logic to update the elements position or behaviour
+        // Logic will get overridden by each elements own updatePosition function
     }
 
     display(x, y, size) {
-        // Display the element at the given position with the specified size
+        // Not currently using this 
         noStroke();
         fill(this.hueValue, 255, 255);
         square(x, y, size);
