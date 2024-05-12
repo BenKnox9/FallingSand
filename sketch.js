@@ -151,13 +151,8 @@ function draw() {
       }
     }
   }
-  if (compareGrids(grid, nextGrid)) {
+  if (compareGrids(grid, nextGrid) || !blnGridChanged) {
     console.log("stopped looping");
-    noLoop();
-  }
-
-  if (!blnGridChanged) {
-    console.log("stopped looping")
     noLoop();
   }
 
