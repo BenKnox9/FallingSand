@@ -16,13 +16,13 @@ class Dirt extends Element {
         if (withinBounds(i - dir, cols)) {
             belowB = grid[i - dir][j + 1];
         }
-        if (below === 0) {
+        if (below === 0 || below === waterMaterial.hueValue) {
             nextGrid[i][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        } else if (belowA === 0) {
+        } else if (belowA === 0 || below === waterMaterial.hueValue) {
             nextGrid[i + dir][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        } else if (belowB === 0) {
+        } else if (belowB === 0 || below === waterMaterial.hueValue) {
             nextGrid[i - dir][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
         }

@@ -4,6 +4,9 @@
  * 
  * This code creates a grid of size specified by cols and rows parameters and simulates falling sand.
  * Sand is dropped by mouse drag.
+ * 
+ * Inspiration and set up from The Coding Train youtube channel
+ * https://www.youtube.com/watch?v=L4u7Zy_b868
  */
 
 
