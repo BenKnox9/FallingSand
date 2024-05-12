@@ -18,6 +18,8 @@ class Dirt extends Element {
         belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
         belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
 
+        if (nextGrid[i][j] === acidMaterial.hueValue) return nextGrid;
+
         if (below === 0) {
             nextGrid[i][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;

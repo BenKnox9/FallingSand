@@ -157,7 +157,6 @@ function draw() {
     }
   }
 
-  //console.log(JSON.stringify(grid) + '/n' + JSON.stringify(nextGrid))
   if (compareGrids(grid, nextGrid)) {
     console.log("stopped looping");
     noLoop();

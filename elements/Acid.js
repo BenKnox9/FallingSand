@@ -15,34 +15,52 @@ class Acid extends Element {
 
 
         if (below === 0) {
-            // nextGrid[i][j] = 0;
             nextGrid[i][j + 1] = acidMaterial.hueValue;
             blnGridChanged = true;
-        } else {
-            if (below === dirtMaterial.hueValue) {
-                if (Math.random() < 0.8) {
-                    nextGrid[i][j + 1] = acidMaterial.hueValue;
-                } else {
-                    nextGrid[i][j + 1] = 0;
-                }
-                blnGridChanged = true;
+        } else if (below === dirtMaterial.hueValue) {
+            if (Math.random() < 0.3) {
+                nextGrid[i][j + 1] = acidMaterial.hueValue;
+            } else {
+                nextGrid[i][j + 1] = 0;
             }
-            if (belowA === dirtMaterial.hueValue) {
-                if (Math.random() < 1.1) {
-                    nextGrid[i + dir][j + 1] = acidMaterial.hueValue;
-                } else {
-                    nextGrid[i + dir][j + 1] = 0;
-                }
-                blnGridChanged = true;
+            blnGridChanged = true;
+        }
+
+        if (belowA === dirtMaterial.hueValue) {
+            if (Math.random() < 0.3) {
+                nextGrid[i + dir][j + 1] = acidMaterial.hueValue;
+                console.log("belowA");
+            } else {
+                nextGrid[i + dir][j + 1] = 0;
             }
-            if (belowB === dirtMaterial.hueValue) {
-                if (Math.random() < 1.1) {
-                    nextGrid[i - dir][j + 1] = acidMaterial.hueValue;
-                } else {
-                    nextGrid[i - dir][j + 1] = 0;
-                }
-                blnGridChanged = true;
+            blnGridChanged = true;
+        }
+
+        if (belowB === dirtMaterial.hueValue) {
+            if (Math.random() < 0.3) {
+                nextGrid[i - dir][j + 1] = acidMaterial.hueValue;
+                console.log("belowB");
+            } else {
+                nextGrid[i - dir][j + 1] = 0;
             }
+            blnGridChanged = true;
+        }
+
+        if (nextGrid[i - dir][j] === dirtMaterial.hueValue) {
+            if (Math.random() < 0.3) {
+                nextGrid[i - dir][j] = acidMaterial.hueValue;
+            } else {
+                nextGrid[i - dir][j] = 0;
+            }
+            blnGridChanged = true;
+        }
+        if (nextGrid[i + dir][j] === dirtMaterial.hueValue) {
+            if (Math.random() < 0.3) {
+                nextGrid[i + dir][j] = acidMaterial.hueValue;
+            } else {
+                nextGrid[i + dir][j] = 0;
+            }
+            blnGridChanged = true;
         }
         nextGrid[i][j] = 0;
 
