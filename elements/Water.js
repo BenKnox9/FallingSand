@@ -9,12 +9,8 @@ class Water extends Element {
         let belowA = -1;
         let belowB = -1;
 
-        if (withinBounds(i + dir, cols)) {
-            belowA = grid[i + dir][j + 1]; // Check below and to the side for available space
-        }
-        if (withinBounds(i - dir, cols)) {
-            belowB = grid[i - dir][j + 1];
-        }
+        belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
+        belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
 
         if (below === 0) {
             // Move downward if space is available

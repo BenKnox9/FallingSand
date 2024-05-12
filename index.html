@@ -13,6 +13,8 @@
     <script src="elements/Element.js"></script>
     <script src="elements/Water.js"></script>
     <script src="elements/Dirt.js"></script>
+    <script src="elements/Acid.js"></script>
+
   </head>
   
   <body onresize="onResize()">
@@ -25,8 +27,11 @@
 
     <nav>
       <div class="sidebar">
-        <button class="element" id="waterButton">Water</button>
         <button class="element" id="dirtButton">Dirt</button>
+        <button class="element" id="waterButton">Water</button>
+        <button class="element" id="AcidButton">Acid</button>
+        <button class="element" id="WoodButton">Wood</button>
+        <button class="element" id="FireButton">Fire</button>
       </div>
     </nav>
 
@@ -37,6 +42,10 @@
 
       document.getElementById('dirtButton').addEventListener('click', function () {
         Element.selectMaterial(dirtMaterial);
+      });
+      
+      document.getElementById('AcidButton').addEventListener('click', function () {
+        Element.selectMaterial(acidMaterial);
       });
     </script>
 

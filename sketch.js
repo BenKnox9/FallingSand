@@ -33,6 +33,7 @@ let cols, rows;
 let blnGridChanged = false;
 const waterMaterial = new Water();
 const dirtMaterial = new Dirt();
+const acidMaterial = new Acid();
 let currentMaterial = dirtMaterial;
 
 let intWindowWidth = document.getElementById('main').offsetWidth;
@@ -89,7 +90,7 @@ function mouseDragged() {
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
 
-  let matrix = 3;
+  let matrix = 12;
   let extent = floor(matrix / 2);
   for (let i = -extent; i <= extent; i++) {
     for (let j = -extent; j <= extent; j++) {
@@ -148,13 +149,35 @@ function draw() {
         case dirtMaterial.hueValue:
           nextGrid = dirtMaterial.updatePosition(grid, nextGrid, i, j);
           break;
+
+        case acidMaterial.hueValue:
+          nextGrid = acidMaterial.updatePosition(grid, nextGrid, i, j);
+          break;
       }
     }
   }
-  if (compareGrids(grid, nextGrid) || !blnGridChanged) {
+
+  //console.log(JSON.stringify(grid) + '/n' + JSON.stringify(nextGrid))
+  if (compareGrids(grid, nextGrid)) {
+    console.log("stopped looping");
+    noLoop();
+  }
+
+  if (!blnGridChanged) {
     console.log("stopped looping");
     noLoop();
   }
 
   grid = nextGrid;
 }
+
+
+
+
+
+
+
+
+
+
+
