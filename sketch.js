@@ -27,26 +27,13 @@ function make2DArray(cols, rows) {
 let grid;
 let w;
 let cols, rows;
-
-const waterMaterial = new Water(); // Create an instance of Water class
-const dirtMaterial = new Dirt();   // Create an instance of Dirt class
-
-let currentMaterial = dirtMaterial; // Set the initial current material
-
-
-// Define different materials
+let blnGridChanged = false;
+const waterMaterial = new Water();
+const dirtMaterial = new Dirt();
+let currentMaterial = dirtMaterial;
 
 let intWindowWidth = document.getElementById('main').offsetWidth;
-
-// window.innerWidth
-//   || document.documentElement.clientWidth
-//   || document.body.clientWidth;
-
 let intWindowHeight = document.getElementById('main').offsetHeight;
-
-// window.innerHeight
-//   || document.documentElement.clientHeight
-//   || document.body.clientHeight;
 
 /**
  * Checks whether a grid square is withinbounds or not
@@ -72,7 +59,6 @@ function compareGrids(a, b) {
  * Sets up background 
  */
 function setup() {
-
   w = 4;
   var canvas = createCanvas(900, 680);
   canvas.parent("canvas")
@@ -146,44 +132,21 @@ function draw() {
   }
 
   let nextGrid = make2DArray(cols, rows);
-  let blnGridChanged = false;
+  blnGridChanged = false;
 
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       let state = grid[i][j];
-      if (state > 0) {
-        let below = grid[i][j + 1];
-        let dir = int(random(1) * 2) * 2 - 1;
-        let belowA = -1;
-        let belowB = -1;
+      switch (state) {
 
-        if (withinBounds(i + dir, cols)) {
-          belowA = grid[i + dir][j + 1];
-        }
-        if (withinBounds(i - dir, cols)) {
-          belowB = grid[i - dir][j + 1];
-        }
-        if (below === 0) {
-          nextGrid[i][j + 1] = state;
-          blnGridChanged = true;
-        } else if (belowA === 0) {
-          nextGrid[i + dir][j + 1] = state;
-          blnGridChanged = true;
-        } else if (belowB === 0) {
-          nextGrid[i - dir][j + 1] = state;
-          blnGridChanged = true;
-        }
+        case dirtMaterial.hueValue:
+          nextGrid = dirtMaterial.updatePosition(grid, nextGrid, i, j);
+          break;
 
-        // else if (state == intHueWater) {
-        //   for (let x = 0; x < 3; x++) {
-        //     if (nextGrid[i + dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
-        //     if (nextGrid[i - dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
-        //   }
-        // }
+        case waterMaterial.hueValue:
+          nextGrid = waterMaterial.updatePosition(grid, nextGrid, i, j);
+          break;
 
-        else {
-          nextGrid[i][j] = state;
-        }
       }
     }
   }

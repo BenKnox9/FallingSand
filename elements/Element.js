@@ -7,7 +7,7 @@ class Element {
         currentMaterial = material;
     }
 
-    update() {
+    updatePosition() {
         // Logic to update the elements position or behaviour
     }
 
