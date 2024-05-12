@@ -62,6 +62,9 @@ class Water extends Element {
                     }
                 }
             }
+
+            // This is for dirt which falls in water. Currently as soon as dirt touches water 
+            // all water below it will turn into dirt.
             if (blnStopRight && blnStopLeft) {
                 if (grid[i][j - 1] === dirtMaterial.hueValue) {
                     nextGrid[i][j] = dirtMaterial.hueValue;
