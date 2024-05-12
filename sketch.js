@@ -27,8 +27,14 @@ function make2DArray(cols, rows) {
 let grid;
 let w;
 let cols, rows;
-let intHueWater = 200;
-let intHueDirt = 32;
+
+const waterMaterial = new Water(); // Create an instance of Water class
+const dirtMaterial = new Dirt();   // Create an instance of Dirt class
+
+let currentMaterial = dirtMaterial; // Set the initial current material
+
+
+// Define different materials
 
 let intWindowWidth = document.getElementById('main').offsetWidth;
 
@@ -62,30 +68,13 @@ function compareGrids(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-function changeElement(element) {
-  console.log(element);
-  switch (element) {
-    case "water":
-      console.log("case water");
-      hueValue = intHueWater;
-      break;
-
-    case "dirt":
-      hueValue = intHueDirt;
-      console.log("case dirt");
-      break;
-  }
-}
-
 /**
  * Sets up background 
  */
 function setup() {
+
   w = 4;
-  hueValue = intHueDirt;
-  console.log(`window height is ${height}`)
-  console.log(`window width is ${width}`)
-  var canvas = createCanvas(1000, 740);
+  var canvas = createCanvas(900, 680);
   canvas.parent("canvas")
   colorMode(HSB, 360, 255, 255);
   cols = width / w;
@@ -107,8 +96,6 @@ function onResize() {
  * When mouse is dragged drops grains of sand in the area covered by the matrix
  */
 function mouseDragged() {
-  console.log(`window height is ${height}`)
-  console.log(`window width is ${width}`)
   loop();
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
@@ -124,7 +111,7 @@ function mouseDragged() {
         if (withinBounds(i, cols) && withinBounds(j, rows)) {
           if (grid[col]) {
             if (grid[col][row] !== undefined) {
-              grid[col][row] = hueValue;
+              grid[col][row] = currentMaterial.hueValue;
             } else {
               console.error(`grid[${col}][${row}] is undefined`);
             }
@@ -187,12 +174,12 @@ function draw() {
           blnGridChanged = true;
         }
 
-        else if (state == intHueWater) {
-          for (let x = 0; x < 3; x++) {
-            if (nextGrid[i + dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
-            if (nextGrid[i - dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
-          }
-        }
+        // else if (state == intHueWater) {
+        //   for (let x = 0; x < 3; x++) {
+        //     if (nextGrid[i + dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
+        //     if (nextGrid[i - dir][j + 1] <= 0) nextGrid[i + dir][j + 1] = state;
+        //   }
+        // }
 
         else {
           nextGrid[i][j] = state;
@@ -208,6 +195,3 @@ function draw() {
 
   grid = nextGrid;
 }
-
-
-

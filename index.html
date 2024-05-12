@@ -10,6 +10,9 @@
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+    <script src="elements/Element.js"></script>
+    <script src="elements/Water.js"></script>
+    <script src="elements/Dirt.js"></script>
   </head>
   
   <body onresize="onResize()">
@@ -22,10 +25,20 @@
 
     <nav>
       <div class="sidebar">
-        <button class="element" id="water" onclick="changeElement('water')">Water</button>
-        <button class="element" id="dirt" onclick="changeElement('dirt')">Dirt</button>
+        <button class="element" id="waterButton">Water</button>
+        <button class="element" id="dirtButton">Dirt</button>
       </div>
     </nav>
+
+    <script>
+      document.getElementById('waterButton').addEventListener('click', function () {
+        Element.selectMaterial(waterMaterial);
+      });
+
+      document.getElementById('dirtButton').addEventListener('click', function () {
+        Element.selectMaterial(dirtMaterial);
+      });
+    </script>
 
   </body>
 
