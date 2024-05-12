@@ -141,17 +141,19 @@ function draw() {
     for (let j = 0; j < rows; j++) {
       let state = grid[i][j];
       switch (state) {
-
-        case dirtMaterial.hueValue:
-          nextGrid = dirtMaterial.updatePosition(grid, nextGrid, i, j);
-          break;
-
         case waterMaterial.hueValue:
           nextGrid = waterMaterial.updatePosition(grid, nextGrid, i, j);
           break;
 
+        case dirtMaterial.hueValue:
+          nextGrid = dirtMaterial.updatePosition(grid, nextGrid, i, j);
+          break;
       }
     }
+  }
+  if (compareGrids(grid, nextGrid)) {
+    console.log("stopped looping");
+    noLoop();
   }
 
   if (!blnGridChanged) {

@@ -4,9 +4,10 @@ class Dirt extends Element {
     }
 
     updatePosition(grid, nextGrid, i, j) {
-
         let below = grid[i][j + 1];
         let dir = int(random(1) * 2) * 2 - 1;
+
+
         let belowA = -1;
         let belowB = -1;
 
@@ -16,19 +17,19 @@ class Dirt extends Element {
         if (withinBounds(i - dir, cols)) {
             belowB = grid[i - dir][j + 1];
         }
-        if (below === 0 || below === waterMaterial.hueValue) {
+        if (below === 0) {
             nextGrid[i][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        } else if (belowA === 0 || below === waterMaterial.hueValue) {
+        } else if (belowA === 0) {
             nextGrid[i + dir][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        } else if (belowB === 0 || below === waterMaterial.hueValue) {
+        } else if (belowB === 0) {
             nextGrid[i - dir][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        }
-        else {
+        } else {
             nextGrid[i][j] = dirtMaterial.hueValue;
         }
+
         return nextGrid;
     }
 

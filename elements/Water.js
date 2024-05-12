@@ -62,7 +62,13 @@ class Water extends Element {
                     }
                 }
             }
-            if (blnStopRight && blnStopLeft) nextGrid[i][j] = waterMaterial.hueValue;
+            if (blnStopRight && blnStopLeft) {
+                if (grid[i][j - 1] === dirtMaterial.hueValue) {
+                    nextGrid[i][j] = dirtMaterial.hueValue;
+                } else {
+                    nextGrid[i][j] = waterMaterial.hueValue;
+                }
+            }
         }
         return nextGrid;
     }
