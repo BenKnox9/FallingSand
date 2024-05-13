@@ -1,6 +1,8 @@
 class Element {
     constructor(hueValue) {
         this.hueValue = hueValue;
+        // Add acid value - determines how quickly selected material is dissolved
+        // Add burn value - determines how quickly selected material is burnt
     }
 
     static selectMaterial(material) {

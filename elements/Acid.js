@@ -7,12 +7,10 @@ class Acid extends Element {
         let below = grid[i][j + 1];
         let dir = int(random(1) * 2) * 2 - 1;
 
-        let belowA = -1;
-        let belowB = -1;
-
-        belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
-        belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
-
+        let belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
+        let belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
+        let sideA = withinBounds(i + dir, cols) ? grid[i + dir][j] : -1;
+        let sideB = withinBounds(i - dir, cols) ? grid[i - dir][j] : -1;
 
         if (below === 0) {
             nextGrid[i][j + 1] = acidMaterial.hueValue;
@@ -46,19 +44,20 @@ class Acid extends Element {
             blnGridChanged = true;
         }
 
-        if (nextGrid[i - dir][j] === dirtMaterial.hueValue) {
-            if (Math.random() < 0.3) {
-                nextGrid[i - dir][j] = acidMaterial.hueValue;
-            } else {
-                nextGrid[i - dir][j] = 0;
-            }
-            blnGridChanged = true;
-        }
-        if (nextGrid[i + dir][j] === dirtMaterial.hueValue) {
+        if (sideA === dirtMaterial.hueValue) {
             if (Math.random() < 0.3) {
                 nextGrid[i + dir][j] = acidMaterial.hueValue;
             } else {
                 nextGrid[i + dir][j] = 0;
+            }
+            blnGridChanged = true;
+        }
+
+        if (sideB === dirtMaterial.hueValue) {
+            if (Math.random() < 0.3) {
+                nextGrid[i - dir][j] = acidMaterial.hueValue;
+            } else {
+                nextGrid[i - dir][j] = 0;
             }
             blnGridChanged = true;
         }
