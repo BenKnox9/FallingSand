@@ -6,11 +6,9 @@ class Water extends Element {
     updatePosition(grid, nextGrid, i, j) {
         let below = grid[i][j + 1]; // Check the space below
         let dir = int(random(1) * 2) * 2 - 1; // Random direction for sideways flow
-        let belowA = -1;
-        let belowB = -1;
 
-        belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
-        belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
+        let belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
+        let belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
 
         if (below === 0) {
             // Move downward if space is available

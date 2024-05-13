@@ -29,6 +29,7 @@ function make2DArray(cols, rows) {
 
 let grid;
 let w;
+let matrix = 4;
 let cols, rows;
 let blnGridChanged = false;
 const waterMaterial = new Water();
@@ -90,7 +91,6 @@ function mouseDragged() {
   let mouseCol = floor(mouseX / w);
   let mouseRow = floor(mouseY / w);
 
-  let matrix = 12;
   let extent = floor(matrix / 2);
   for (let i = -extent; i <= extent; i++) {
     for (let j = -extent; j <= extent; j++) {
@@ -106,7 +106,7 @@ function mouseDragged() {
               console.error(`grid[${col}][${row}] is undefined`);
             }
           } else {
-            console.error(`grid[${col}] is undefined`);
+            // console.error(`grid[${col}] is undefined`);
           }
         }
       }
@@ -127,7 +127,7 @@ function draw() {
     for (let j = 0; j < rows; j++) {
       noStroke();
       if (grid[i][j] > 0) {
-        fill(grid[i][j], 255, 255);
+        fill(grid[i][j], 255, 255); // Can I get grid to hold comma separated for the three values?
         let x = i * w;
         let y = j * w;
         square(x, y, w);
@@ -158,12 +158,12 @@ function draw() {
   }
 
   if (compareGrids(grid, nextGrid)) {
-    console.log("stopped looping");
+    // console.log("stopped looping");
     noLoop();
   }
 
   if (!blnGridChanged) {
-    console.log("stopped looping");
+    // console.log("stopped looping");
     noLoop();
   }
 
@@ -172,8 +172,23 @@ function draw() {
 
 
 
+// Update the current slider value (each time you drag the slider handle)
+// slider.oninput = function () {
+//   console.log("matrix = " + matrix);
+//   matrix = this.value;
+// }
+// Wait for the DOM content to be fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the slider element
+  var slider = document.getElementById("myRange");
 
-
+  // Attach an event listener to the slider
+  slider.addEventListener("input", function () {
+    // Update the matrix value when the slider value changes
+    matrix = parseInt(this.value);
+    console.log("matrix = " + matrix);
+  });
+});
 
 
 

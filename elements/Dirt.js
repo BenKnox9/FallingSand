@@ -6,8 +6,6 @@ class Dirt extends Element {
     updatePosition(grid, nextGrid, i, j) {
         let dir = int(random(1) * 2) * 2 - 1;
         let below = -1;
-        let belowA = -1;
-        let belowB = -1;
 
         if (withinBounds(j, rows)) {
             below = grid[i][j + 1];
@@ -15,8 +13,8 @@ class Dirt extends Element {
             nextGrid[i][j] = dirtMaterial.hueValue;
         }
 
-        belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
-        belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
+        let belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
+        let belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
 
         if (nextGrid[i][j] === acidMaterial.hueValue) return nextGrid;
 

@@ -27,7 +27,6 @@ class Acid extends Element {
         if (belowA === dirtMaterial.hueValue) {
             if (Math.random() < 0.3) {
                 nextGrid[i + dir][j + 1] = acidMaterial.hueValue;
-                console.log("belowA");
             } else {
                 nextGrid[i + dir][j + 1] = 0;
             }
@@ -37,7 +36,6 @@ class Acid extends Element {
         if (belowB === dirtMaterial.hueValue) {
             if (Math.random() < 0.3) {
                 nextGrid[i - dir][j + 1] = acidMaterial.hueValue;
-                console.log("belowB");
             } else {
                 nextGrid[i - dir][j + 1] = 0;
             }
