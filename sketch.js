@@ -27,6 +27,7 @@ function make2DArray(cols, rows) {
   return arr;
 }
 
+let blnClear = false;
 let grid;
 let w;
 let matrix = 4;
@@ -135,12 +136,21 @@ function draw() {
     }
   }
 
+
   let nextGrid = make2DArray(cols, rows);
   blnGridChanged = false;
 
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       let state = grid[i][j];
+
+      if (blnClear) {
+        if (j == rows - 1) {
+          nextGrid[i][j] = 0;
+          continue;
+        }
+      }
+
       switch (state) {
         case waterMaterial.hueValue:
           nextGrid = waterMaterial.updatePosition(grid, nextGrid, i, j);
@@ -153,30 +163,20 @@ function draw() {
         case acidMaterial.hueValue:
           nextGrid = acidMaterial.updatePosition(grid, nextGrid, i, j);
           break;
+
       }
     }
   }
 
   if (compareGrids(grid, nextGrid)) {
-    // console.log("stopped looping");
     noLoop();
-  }
-
-  if (!blnGridChanged) {
-    // console.log("stopped looping");
-    noLoop();
+    blnClear = false;
   }
 
   grid = nextGrid;
 }
 
 
-
-// Update the current slider value (each time you drag the slider handle)
-// slider.oninput = function () {
-//   console.log("matrix = " + matrix);
-//   matrix = this.value;
-// }
 // Wait for the DOM content to be fully loaded
 document.addEventListener("DOMContentLoaded", function () {
   // Get the slider element
@@ -189,6 +189,10 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("matrix = " + matrix);
   });
 });
+
+function startLooping() {
+  loop();
+}
 
 
 

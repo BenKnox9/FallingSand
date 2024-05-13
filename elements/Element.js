@@ -9,6 +9,7 @@ class Element {
         currentMaterial = material;
     }
 
+
     updatePosition() {
         // Logic will get overridden by each elements own updatePosition function
     }
