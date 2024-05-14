@@ -29,7 +29,7 @@ class Water extends Element {
             for (let k = 1; k < cols; k++) {
                 if (!blnStopRight) {
                     if (withinBounds(i + k, cols)) {
-                        if (grid[i + k][j] === dirtMaterial.hueValue) {
+                        if (grid[i + k][j] === dirtMaterial.hueValue || grid[i + k][j] === sandMaterial.hueValue) {
                             blnStopRight = true;
                         }
                         if (grid[i + k][j + 1] === 0) {
@@ -43,7 +43,7 @@ class Water extends Element {
                 }
                 if (!blnStopLeft) {
                     if (withinBounds(i - k, cols)) {
-                        if (grid[i - k][j] === dirtMaterial.hueValue) {
+                        if (grid[i - k][j] === dirtMaterial.hueValue || grid[i - k][j] === sandMaterial.hueValue) {
                             blnStopLeft = true;
                         }
                         if (grid[i - k][j + 1] === 0) {

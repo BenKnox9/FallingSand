@@ -4,6 +4,8 @@ class Dirt extends Element {
     }
 
     updatePosition(grid, nextGrid, i, j) {
+        if (nextGrid[i][j] === acidMaterial.hueValue) return nextGrid;
+
         if (dirtMaterial.blnSettled && grid[i][j] === dirtMaterial.hueValue) {
             nextGrid[i][j] = dirtMaterial.hueValue;
             return nextGrid;
@@ -24,7 +26,6 @@ class Dirt extends Element {
         let belowA = withinBounds(i + dir, cols) ? grid[i + dir][j + 1] : -1;
         let belowB = withinBounds(i - dir, cols) ? grid[i - dir][j + 1] : -1;
 
-        if (nextGrid[i][j] === acidMaterial.hueValue) return nextGrid;
 
         if (below === 0) {
             nextGrid[i][j + 1] = dirtMaterial.hueValue;
