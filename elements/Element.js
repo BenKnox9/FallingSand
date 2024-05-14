@@ -1,6 +1,7 @@
 class Element {
-    constructor(hueValue) {
+    constructor(hueValue, blnSettled) {
         this.hueValue = hueValue;
+        this.blnSettled = blnSettled;
         // Add acid value - determines how quickly selected material is dissolved
         // Add burn value - determines how quickly selected material is burnt
     }

@@ -1,6 +1,6 @@
 class Acid extends Element {
     constructor() {
-        super(350);
+        super('#9AE940', false);
     }
 
     updatePosition(grid, nextGrid, i, j) {

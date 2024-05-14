@@ -1,6 +1,6 @@
 class Water extends Element {
     constructor() {
-        super(200);
+        super('#3598ED', false);
     }
 
     updatePosition(grid, nextGrid, i, j) {

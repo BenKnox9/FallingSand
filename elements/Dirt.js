@@ -1,11 +1,19 @@
 class Dirt extends Element {
     constructor() {
-        super(32);
+        super('#8C5213', false);
     }
 
     updatePosition(grid, nextGrid, i, j) {
+        if (dirtMaterial.blnSettled && grid[i][j] === dirtMaterial.hueValue) {
+            nextGrid[i][j] = dirtMaterial.hueValue;
+            return nextGrid;
+        }
         let dir = int(random(1) * 2) * 2 - 1;
         let below = -1;
+
+        let randomA = Math.random();
+        let randomB = Math.random();
+
 
         if (withinBounds(j, rows)) {
             below = grid[i][j + 1];
@@ -21,10 +29,10 @@ class Dirt extends Element {
         if (below === 0) {
             nextGrid[i][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        } else if (belowA === 0) {
+        } else if (belowA === 0 && randomA < 0.02) {
             nextGrid[i + dir][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
-        } else if (belowB === 0) {
+        } else if (belowB === 0 && randomB < 0.02) {
             nextGrid[i - dir][j + 1] = dirtMaterial.hueValue;
             blnGridChanged = true;
         } else {

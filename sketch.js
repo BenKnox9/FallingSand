@@ -9,6 +9,21 @@
  * https://www.youtube.com/watch?v=L4u7Zy_b868
  */
 
+let blnClear = false;
+let grid;
+let w;
+let matrix = 4;
+let cols, rows;
+let blnGridChanged = false;
+let intDirtSettleCount = 0;
+const waterMaterial = new Water();
+const sandMaterial = new Sand();
+const acidMaterial = new Acid();
+const dirtMaterial = new Dirt();
+let currentMaterial = sandMaterial;
+
+let intWindowWidth = document.getElementById('main').offsetWidth;
+let intWindowHeight = document.getElementById('main').offsetHeight;
 
 /**
  * Creates a grid for the background for each grain of sand
@@ -27,19 +42,18 @@ function make2DArray(cols, rows) {
   return arr;
 }
 
-let blnClear = false;
-let grid;
-let w;
-let matrix = 4;
-let cols, rows;
-let blnGridChanged = false;
-const waterMaterial = new Water();
-const dirtMaterial = new Dirt();
-const acidMaterial = new Acid();
-let currentMaterial = dirtMaterial;
-
-let intWindowWidth = document.getElementById('main').offsetWidth;
-let intWindowHeight = document.getElementById('main').offsetHeight;
+/**
+ * Sets up background 
+ */
+function setup() {
+  w = 4;
+  var canvas = createCanvas(900, 680);
+  canvas.parent("canvas")
+  colorMode(HSB, 360, 255, 255);
+  cols = width / w;
+  rows = height / w;
+  grid = make2DArray(cols, rows);
+}
 
 /**
  * Checks whether a grid square is withinbounds or not
@@ -61,24 +75,8 @@ function compareGrids(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-/**
- * Sets up background 
- */
-function setup() {
-  w = 4;
-  var canvas = createCanvas(900, 680);
-  canvas.parent("canvas")
-  colorMode(HSB, 360, 255, 255);
-  cols = width / w;
-  rows = height / w;
-  grid = make2DArray(cols, rows);
-}
-
 function onResize() {
-  // resize canvas 
   if (intWindowHeight && intWindowWidth) {
-
-    console.log(`resizing; width: ${intWindowWidth}, height: ${intWindowHeight}`);
     resizeCanvas(intWindowWidth, intWindowHeight);
   }
 
@@ -103,6 +101,9 @@ function mouseDragged() {
           if (grid[col]) {
             if (grid[col][row] !== undefined) {
               grid[col][row] = currentMaterial.hueValue;
+              if (currentMaterial === dirtMaterial) {
+                dirtMaterial.blnSettled = false;
+              }
             } else {
               console.error(`grid[${col}][${row}] is undefined`);
             }
@@ -121,21 +122,26 @@ function mouseDragged() {
  */
 function draw() {
   background(0);
+  // if (currentMaterial === dirtMaterial) {
+  //   intDirtSettleCount += 1;
+  // }
 
+  // if (intDirtSettleCount > 12) {
+  //   dirtMaterial.blnSettled = true;
+  // }
 
   // draw current grid
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       noStroke();
-      if (grid[i][j] > 0) {
-        fill(grid[i][j], 255, 255); // Can I get grid to hold comma separated for the three values?
+      if (grid[i][j] !== 0) {
+        fill(grid[i][j]); // Can I get grid to hold comma separated for the three values?
         let x = i * w;
         let y = j * w;
         square(x, y, w);
       }
     }
   }
-
 
   let nextGrid = make2DArray(cols, rows);
   blnGridChanged = false;
@@ -156,6 +162,10 @@ function draw() {
           nextGrid = waterMaterial.updatePosition(grid, nextGrid, i, j);
           break;
 
+        case sandMaterial.hueValue:
+          nextGrid = sandMaterial.updatePosition(grid, nextGrid, i, j);
+          break;
+
         case dirtMaterial.hueValue:
           nextGrid = dirtMaterial.updatePosition(grid, nextGrid, i, j);
           break;
@@ -169,6 +179,8 @@ function draw() {
   }
 
   if (compareGrids(grid, nextGrid)) {
+    dirtMaterial.blnSettled = true;
+    // intDirtSettleCount = 0;
     noLoop();
     blnClear = false;
   }
@@ -176,17 +188,11 @@ function draw() {
   grid = nextGrid;
 }
 
-
-// Wait for the DOM content to be fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Get the slider element
   var slider = document.getElementById("myRange");
 
-  // Attach an event listener to the slider
   slider.addEventListener("input", function () {
-    // Update the matrix value when the slider value changes
     matrix = parseInt(this.value);
-    console.log("matrix = " + matrix);
   });
 });
 
