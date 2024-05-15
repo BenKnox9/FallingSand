@@ -58,6 +58,9 @@ class Water extends Element {
                 if (grid[i][j - 1] === dirtMaterial.hueValue) {
                     nextGrid[i][j] = dirtMaterial.hueValue;
                     nextGrid[i][j - 1] = waterMaterial.hueValue;
+                } else if (grid[i][j - 1] === sandMaterial.hueValue) {
+                    nextGrid[i][j] = sandMaterial.hueValue;
+                    nextGrid[i][j - 1] = waterMaterial.hueValue;
                 } else {
                     nextGrid[i][j] = waterMaterial.hueValue;
                 }
