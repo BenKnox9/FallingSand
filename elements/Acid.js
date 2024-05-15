@@ -14,14 +14,12 @@ class Acid extends Element {
 
         if (below === 0) {
             nextGrid[i][j + 1] = acidMaterial.hueValue;
-            blnGridChanged = true;
         } else if (below === dirtMaterial.hueValue || below === sandMaterial.hueValue) {
             if (Math.random() < 0.3) {
                 nextGrid[i][j + 1] = acidMaterial.hueValue;
             } else {
                 nextGrid[i][j + 1] = 0;
             }
-            blnGridChanged = true;
         }
 
         if (belowA === dirtMaterial.hueValue || belowA === sandMaterial.hueValue) {
@@ -30,7 +28,6 @@ class Acid extends Element {
             } else {
                 nextGrid[i + dir][j + 1] = 0;
             }
-            blnGridChanged = true;
         }
 
         if (belowB === dirtMaterial.hueValue || belowB === sandMaterial.hueValue) {
@@ -39,7 +36,6 @@ class Acid extends Element {
             } else {
                 nextGrid[i - dir][j + 1] = 0;
             }
-            blnGridChanged = true;
         }
 
         if (sideA === dirtMaterial.hueValue || sideA === sandMaterial.hueValue) {
@@ -48,7 +44,6 @@ class Acid extends Element {
             } else {
                 nextGrid[i + dir][j] = 0;
             }
-            blnGridChanged = true;
         }
 
         if (sideB === dirtMaterial.hueValue || sideB === sandMaterial.hueValue) {
@@ -57,7 +52,6 @@ class Acid extends Element {
             } else {
                 nextGrid[i - dir][j] = 0;
             }
-            blnGridChanged = true;
         }
         nextGrid[i][j] = 0;
 

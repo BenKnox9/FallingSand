@@ -29,13 +29,10 @@ class Dirt extends Element {
 
         if (below === 0) {
             nextGrid[i][j + 1] = dirtMaterial.hueValue;
-            blnGridChanged = true;
         } else if (belowA === 0 && randomA < 0.02) {
             nextGrid[i + dir][j + 1] = dirtMaterial.hueValue;
-            blnGridChanged = true;
         } else if (belowB === 0 && randomB < 0.02) {
             nextGrid[i - dir][j + 1] = dirtMaterial.hueValue;
-            blnGridChanged = true;
         } else {
             nextGrid[i][j] = dirtMaterial.hueValue;
         }

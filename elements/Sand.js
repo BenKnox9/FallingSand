@@ -20,13 +20,10 @@ class Sand extends Element {
 
         if (below === 0) {
             nextGrid[i][j + 1] = sandMaterial.hueValue;
-            blnGridChanged = true;
         } else if (belowA === 0) {
             nextGrid[i + dir][j + 1] = sandMaterial.hueValue;
-            blnGridChanged = true;
         } else if (belowB === 0) {
             nextGrid[i - dir][j + 1] = sandMaterial.hueValue;
-            blnGridChanged = true;
         } else {
             nextGrid[i][j] = sandMaterial.hueValue;
         }

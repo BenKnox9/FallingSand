@@ -13,15 +13,12 @@ class Water extends Element {
         if (below === 0) {
             // Move downward if space is available
             nextGrid[i][j + 1] = waterMaterial.hueValue;
-            blnGridChanged = true;
         } else if (belowA === 0) {
             // Move sideways if space is available to one side
             nextGrid[i + dir][j + 1] = waterMaterial.hueValue;
-            blnGridChanged = true;
         } else if (belowB === 0) {
             // Move sideways if space is available to the other side
             nextGrid[i - dir][j + 1] = waterMaterial.hueValue;
-            blnGridChanged = true;
         } else {
             let blnStopRight = false;
             let blnStopLeft = false;
@@ -34,7 +31,6 @@ class Water extends Element {
                         }
                         if (grid[i + k][j + 1] === 0) {
                             nextGrid[i + k][j + 1] = waterMaterial.hueValue;
-                            blnGridChanged = true;
                             break; // Exit loop once an empty spot is found
                         }
                     } else {
@@ -48,7 +44,6 @@ class Water extends Element {
                         }
                         if (grid[i - k][j + 1] === 0) {
                             nextGrid[i - k][j + 1] = waterMaterial.hueValue;
-                            blnGridChanged = true;
                             break; // Exit loop once an empty spot is found
                         }
                     } else {
@@ -62,6 +57,7 @@ class Water extends Element {
             if (blnStopRight && blnStopLeft) {
                 if (grid[i][j - 1] === dirtMaterial.hueValue) {
                     nextGrid[i][j] = dirtMaterial.hueValue;
+                    nextGrid[i][j - 1] = waterMaterial.hueValue;
                 } else {
                     nextGrid[i][j] = waterMaterial.hueValue;
                 }
