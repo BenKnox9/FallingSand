@@ -3,6 +3,22 @@ class Water extends Element {
         super('#3598ED', false);
     }
 
+    /**
+     * Getter to check if a material is solid
+     * @returns true if solid
+     */
+    isSolid() {
+        return false;
+    }
+
+    /**
+     * Updates the position of a given grain of material
+     * @param {2D Array} grid The current grid
+     * @param {2D Array} nextGrid The new grid
+     * @param {int} i the column number being updated
+     * @param {int} j the row number being updated
+     * @returns the updated grid
+     */
     updatePosition(grid, nextGrid, i, j) {
         let below = grid[i][j + 1]; // Check the space below
         let dir = int(random(1) * 2) * 2 - 1; // Random direction for sideways flow
@@ -26,7 +42,7 @@ class Water extends Element {
             for (let k = 1; k < cols; k++) {
                 if (!blnStopRight) {
                     if (withinBounds(i + k, cols)) {
-                        if (grid[i + k][j] === dirtMaterial.hueValue || grid[i + k][j] === sandMaterial.hueValue) {
+                        if (Element.isSolidHue(grid[i + k][j])) {
                             blnStopRight = true;
                         }
                         if (grid[i + k][j + 1] === 0) {
@@ -39,7 +55,7 @@ class Water extends Element {
                 }
                 if (!blnStopLeft) {
                     if (withinBounds(i - k, cols)) {
-                        if (grid[i - k][j] === dirtMaterial.hueValue || grid[i - k][j] === sandMaterial.hueValue) {
+                        if (Element.isSolidHue(grid[i - k][j])) {
                             blnStopLeft = true;
                         }
                         if (grid[i - k][j + 1] === 0) {
@@ -55,11 +71,8 @@ class Water extends Element {
             // This is for dirt which falls in water. Currently as soon as dirt touches water 
             // all water below it will turn into dirt.
             if (blnStopRight && blnStopLeft) {
-                if (grid[i][j - 1] === dirtMaterial.hueValue) {
-                    nextGrid[i][j] = dirtMaterial.hueValue;
-                    nextGrid[i][j - 1] = waterMaterial.hueValue;
-                } else if (grid[i][j - 1] === sandMaterial.hueValue) {
-                    nextGrid[i][j] = sandMaterial.hueValue;
+                if (Element.isSolidHue(grid[i][j - 1])) {
+                    nextGrid[i][j] = grid[i][j - 1];
                     nextGrid[i][j - 1] = waterMaterial.hueValue;
                 } else {
                     nextGrid[i][j] = waterMaterial.hueValue;

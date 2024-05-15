@@ -16,10 +16,19 @@ let matrix = 4;
 let cols, rows;
 let blnGridChanged = false;
 let intDirtSettleCount = 0;
-const waterMaterial = new Water();
-const sandMaterial = new Sand();
-const acidMaterial = new Acid();
-const dirtMaterial = new Dirt();
+
+const waterMaterial = new Water('#3598ED');
+const sandMaterial = new Sand('#F4DF25');
+const dirtMaterial = new Dirt('#965F00');
+const acidMaterial = new Acid('#9AE940');
+const woodMaterial = new Wood('#4B3612');
+
+Element.registerElement(waterMaterial);
+Element.registerElement(sandMaterial);
+Element.registerElement(dirtMaterial);
+Element.registerElement(acidMaterial);
+Element.registerElement(woodMaterial);
+
 let currentMaterial = sandMaterial;
 
 let intWindowWidth = document.getElementById('main').offsetWidth;
@@ -27,8 +36,8 @@ let intWindowHeight = document.getElementById('main').offsetHeight;
 
 /**
  * Creates a grid for the background for each grain of sand
- * @param {*} cols number of columns for grid of sand
- * @param {*} rows number of rows for gird of sand
+ * @param {int} cols number of columns for grid of sand
+ * @param {int} rows number of rows for gird of sand
  * @returns 2D grid
  */
 function make2DArray(cols, rows) {
@@ -57,8 +66,8 @@ function setup() {
 
 /**
  * Checks whether a grid square is withinbounds or not
- * @param {*} i x or y coordinate of the square being checked
- * @param {*} bound cols or rows depending on which axis is being checked 
+ * @param {int} i x or y coordinate of the square being checked
+ * @param {int} bound cols or rows depending on which axis is being checked 
  * @returns 
  */
 function withinBounds(i, bound) {
@@ -67,8 +76,8 @@ function withinBounds(i, bound) {
 
 /**
  * Compares arrays
- * @param {*} a An array which is being compared
- * @param {*} b An array which is being compared
+ * @param {Arr} a An array which is being compared
+ * @param {Arr} b An array which is being compared
  * @returns true if the arrays match
  */
 function compareGrids(a, b) {
@@ -99,10 +108,16 @@ function mouseDragged() {
 
         if (withinBounds(i, cols) && withinBounds(j, rows)) {
           if (grid[col]) {
+
             if (grid[col][row] !== undefined) {
-              grid[col][row] = currentMaterial.hueValue;
-              if (currentMaterial === dirtMaterial) {
-                dirtMaterial.blnSettled = false;
+
+              if (grid[col][row] !== sandMaterial.hueValue && grid[col][row] !== dirtMaterial.hueValue && grid[col][row] !== woodMaterial.hueValue) {  // This is faster than using Element.isSolidHue
+                //   if (!Element.isSolidHue(grid[col][row])) {
+
+                grid[col][row] = currentMaterial.hueValue;
+                if (currentMaterial === dirtMaterial) {
+                  dirtMaterial.blnSettled = false;
+                }
               }
             } else {
               console.error(`grid[${col}][${row}] is undefined`);
@@ -114,6 +129,7 @@ function mouseDragged() {
       }
     }
   }
+  intDirtSettleCount = 0;
 }
 
 /**
@@ -122,20 +138,20 @@ function mouseDragged() {
  */
 function draw() {
   background(0);
-  // if (currentMaterial === dirtMaterial) {
-  //   intDirtSettleCount += 1;
-  // }
+  if (currentMaterial === dirtMaterial) {
+    intDirtSettleCount += 1;
+  }
 
-  // if (intDirtSettleCount > 12) {
-  //   dirtMaterial.blnSettled = true;
-  // }
+  if (intDirtSettleCount > 100) {
+    dirtMaterial.blnSettled = true;
+  }
 
   // draw current grid
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       noStroke();
       if (grid[i][j] !== 0) {
-        fill(grid[i][j]); // Can I get grid to hold comma separated for the three values?
+        fill(grid[i][j]);
         let x = i * w;
         let y = j * w;
         square(x, y, w);
@@ -146,6 +162,9 @@ function draw() {
   let nextGrid = make2DArray(cols, rows);
   blnGridChanged = false;
 
+  // Creates a copy of the grid 
+  // Then each grain of each material will move in the desired direction 
+  // saving the next state in nextGrid
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       let state = grid[i][j];
@@ -174,13 +193,17 @@ function draw() {
           nextGrid = acidMaterial.updatePosition(grid, nextGrid, i, j);
           break;
 
+        case woodMaterial.hueValue:
+          nextGrid = woodMaterial.updatePosition(grid, nextGrid, i, j);
+          break;
+
       }
     }
   }
 
+  // If nothing has changed then stop drawing
   if (compareGrids(grid, nextGrid)) {
     dirtMaterial.blnSettled = true;
-    // intDirtSettleCount = 0;
     noLoop();
     blnClear = false;
   }
@@ -188,6 +211,7 @@ function draw() {
   grid = nextGrid;
 }
 
+// Event listener for the brush size slider
 document.addEventListener("DOMContentLoaded", function () {
   var slider = document.getElementById("myRange");
 
@@ -199,9 +223,3 @@ document.addEventListener("DOMContentLoaded", function () {
 function startLooping() {
   loop();
 }
-
-
-
-
-
-

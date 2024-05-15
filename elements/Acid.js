@@ -3,6 +3,22 @@ class Acid extends Element {
         super('#9AE940', false);
     }
 
+    /**
+     * Getter to check if a material is solid
+     * @returns true if solid
+     */
+    isSolid() {
+        return false;
+    }
+
+    /**
+     * Updates the position of a given grain of material
+     * @param {2D Array} grid The current grid
+     * @param {2D Array} nextGrid The new grid
+     * @param {int} i the column number being updated
+     * @param {int} j the row number being updated
+     * @returns the updated grid
+     */
     updatePosition(grid, nextGrid, i, j) {
         let below = grid[i][j + 1];
         let dir = int(random(1) * 2) * 2 - 1;
@@ -14,7 +30,7 @@ class Acid extends Element {
 
         if (below === 0) {
             nextGrid[i][j + 1] = acidMaterial.hueValue;
-        } else if (below === dirtMaterial.hueValue || below === sandMaterial.hueValue) {
+        } else if (Element.isSolidHue(below)) {
             if (Math.random() < 0.3) {
                 nextGrid[i][j + 1] = acidMaterial.hueValue;
             } else {
@@ -22,7 +38,7 @@ class Acid extends Element {
             }
         }
 
-        if (belowA === dirtMaterial.hueValue || belowA === sandMaterial.hueValue) {
+        if (Element.isSolidHue(belowA)) {
             if (Math.random() < 0.3) {
                 nextGrid[i + dir][j + 1] = acidMaterial.hueValue;
             } else {
@@ -30,7 +46,7 @@ class Acid extends Element {
             }
         }
 
-        if (belowB === dirtMaterial.hueValue || belowB === sandMaterial.hueValue) {
+        if (Element.isSolidHue(belowB)) {
             if (Math.random() < 0.3) {
                 nextGrid[i - dir][j + 1] = acidMaterial.hueValue;
             } else {
@@ -38,7 +54,7 @@ class Acid extends Element {
             }
         }
 
-        if (sideA === dirtMaterial.hueValue || sideA === sandMaterial.hueValue) {
+        if (Element.isSolidHue()) {
             if (Math.random() < 0.3) {
                 nextGrid[i + dir][j] = acidMaterial.hueValue;
             } else {
@@ -46,7 +62,7 @@ class Acid extends Element {
             }
         }
 
-        if (sideB === dirtMaterial.hueValue || sideB === sandMaterial.hueValue) {
+        if (Element.isSolidHue(sideB)) {
             if (Math.random() < 0.3) {
                 nextGrid[i - dir][j] = acidMaterial.hueValue;
             } else {

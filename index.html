@@ -15,6 +15,7 @@
     <script src="elements/Dirt.js"></script>
     <script src="elements/Water.js"></script>
     <script src="elements/Acid.js"></script>
+    <script src="elements/Wood.js"></script>
 
   </head>
   
@@ -54,11 +55,14 @@
     
       document.getElementById('dirtButton').addEventListener('click', function () {
         Element.selectMaterial(dirtMaterial);
-        console.log("dirt material is " + dirtMaterial.blnSettled);
       });
       
       document.getElementById('AcidButton').addEventListener('click', function () {
         Element.selectMaterial(acidMaterial);
+      });
+      
+      document.getElementById('WoodButton').addEventListener('click', function () {
+        Element.selectMaterial(woodMaterial);
       });
       
       document.getElementById('ClearButton').addEventListener('click', function () {
