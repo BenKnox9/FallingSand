@@ -194,7 +194,7 @@ function draw() {
           break;
 
         case woodMaterial.hueValue:
-          nextGrid = woodMaterial.updatePosition(grid, nextGrid, i, j);
+          nextGrid = woodMaterial.updatePosition(grid, nextGrid, i, j, blnClear);
           break;
 
       }
